@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### HTML → PNG (Tailwind-powered)
 
-## Getting Started
+Convert arbitrary HTML (with Tailwind CSS) into a downloadable PNG.
 
-First, run the development server:
+This app provides a Monaco editor for HTML input, renders it live, and captures the rendered DOM to PNG using `modern-screenshot`.
+
+### Features
+
+- **Type HTML + Tailwind**: Write markup with Tailwind classes in an editor powered by Monaco
+- **Live preview**: Your HTML renders instantly in-page
+- **One-click export**: Capture the rendered area as a PNG
+
+### Tech stack
+
+- **Framework**: Next.js 15 (App Router), React 19, TypeScript
+- **Editor**: `@monaco-editor/react`
+- **Capture**: `modern-screenshot` (`domToPng`)
+- **Styling**: Tailwind CSS 4 via CDN
+- **Formatting/Linting**: Biome + Ultracite
+
+### Quick start
+
+Prerequisites: Node 18+ (Node 20 LTS recommended)
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# or: yarn dev / pnpm dev / bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Type or paste your HTML in the editor panel
+2. Use Tailwind utility classes as needed (Tailwind 4 is injected via CDN)
+3. Click "Save as PNG" to download the rendered region
 
-## Learn More
+Tip: The captured area corresponds to the element with id `screenshot-element`. Ensure your HTML places the intended content inside that element (it is the live preview container).
 
-To learn more about Next.js, take a look at the following resources:
+Example snippet to try:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```html
+<div
+  class="flex size-64 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg"
+>
+  <div class="size-32 rounded-full bg-radial from-orange-500 to-red-600"></div>
+</div>
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### How it works
 
-## Deploy on Vercel
+- User input is injected into an empty div via `dangerouslySetInnerHTML`
+- Clicking "Save as PNG" calls `domToPng` from `modern-screenshot`
+- Tailwind 4 is loaded via CDN in script tag inside `src/app/layout.tsx`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Notes and limitations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Text rendering**: Text may appear blurry in exported PNGs due to limitations with the underlying `modern-screenshot` library
+- **Font limitations**: Custom fonts are not supported; exported images use the system default font
+- **Canvas size limits**: Very large elements may exceed browser canvas size limits, resulting in failed exports or empty PNG downloads
+
+### Scripts
+
+- **dev**: `npm run dev` — start the dev server
+- **build**: `npm run build` — production build
+- **start**: `npm start` — run the production server
+- **lint**: `npm run lint` — check for code issues
+- **format**: `npm run format` — format and fix code automatically
+
+### Contributing
+
+Contributions are welcome. Please keep changes minimal and focused.
+
+- **Formatting/Linting**: This repo uses Biome via Ultracite. Before committing, run:
+
+  ```bash
+  npm run format
+  # to check only:
+  npm run lint
+  ```
