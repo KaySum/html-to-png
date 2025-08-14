@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import CodeEditor from "@/components/CodeEditor";
 import { Button } from "@/components/ui/button";
 import { exampleHtml } from "@/data/example";
-import { author, authorUrl, description, title } from "@/data/info";
+import { description, title } from "@/data/info";
 
 export default function Home() {
   const [htmlInput, setHtmlInput] = useState("");
@@ -30,13 +30,7 @@ export default function Home() {
       <div className="m-5 flex justify-between gap-5">
         <div className="flex flex-col gap-2">
           <h1 className="font-bold text-2xl">{title}</h1>
-          <h2 className="text-xl">
-            By{" "}
-            <a className="text-blue-500 hover:underline" href={authorUrl}>
-              {author}
-            </a>
-          </h2>
-          <p>{description}</p>
+          <h2>{description}</h2>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button
