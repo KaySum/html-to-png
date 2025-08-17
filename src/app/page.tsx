@@ -33,7 +33,7 @@ export default function Home() {
           <h1 className="font-bold text-2xl">{title}</h1>
           <h2>{description}</h2>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap content-start gap-2">
           <Button
             onClick={() => setHtmlInput("")}
             type="button"
