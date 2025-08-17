@@ -1,5 +1,6 @@
 "use client";
 
+import { Download, Eraser } from "lucide-react";
 import { domToPng } from "modern-screenshot";
 import { useEffect, useState } from "react";
 import CodeEditor from "@/components/CodeEditor";
@@ -38,10 +39,10 @@ export default function Home() {
             type="button"
             variant="destructive"
           >
-            Clear
+            Clear <Eraser className="size-4" />
           </Button>
           <Button onClick={saveScreenshot} type="button">
-            Download
+            Download <Download className="size-4" />
           </Button>
         </div>
       </div>
